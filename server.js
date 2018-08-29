@@ -1,24 +1,19 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var path = require('path');
 
+// Dependencies
+var express = require("express");
+var bodyParser = require("body-parser");
 var app = express();
-
-var PORT = process.env.PORT || 8080;
-
-app.use(bodyParser.urlencoded({ extended: true}))
-
-app.use(bodyParser.json({type: 'application/*+json'}))
-
-app.use(bodyParser.raw({type: 'application/vnd.custom-type'}))
-
-app.use(bodyParser.text({type: 'text/html'}))
-
-require("./app/routing/htmlRoutes.js")(app);
-
-require("./app/routing/apiRoutes.js")(app);
-
-app.listen(PORT,function() {
-    console.log("Listening on PORT: " + PORT);
-})
-
+// Port
+var port = process.env.port || 8080;
+// Body Parser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.text());
+app.use(bodyParser.json({ type: "application/vnd.api+json" }));
+// Routes
+require("./app/routing/apiRoutes")(app);
+require("./app/routing/htmlRoutes")(app);
+// Listener
+app.listen(port, function(){
+	console.log("Listening on Port :" +port);
+});
